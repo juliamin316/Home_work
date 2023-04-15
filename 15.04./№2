@@ -1,0 +1,21 @@
+# Читаем продукты в холодильнике
+m = int(input())
+fridge = set()
+for i in range(m):
+    fridge.add(input().strip())
+
+# Читаем рецепты
+n = int(input())
+for i in range(n):
+    # Читаем название рецепта и количество ингредиентов
+    recipe_name = input().strip()
+    ingredient_count = int(input())
+
+    # Создаем множество с ингредиентами для текущего рецепта
+    ingredients = set()
+    for j in range(ingredient_count):
+        ingredients.add(input().strip())
+
+    # Проверяем, есть ли все ингредиенты рецепта в холодильнике
+    if ingredients.issubset(fridge):
+        print(recipe_name)
