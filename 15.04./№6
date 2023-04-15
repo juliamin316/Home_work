@@ -1,0 +1,47 @@
+import random
+
+# Список слов для игры
+words = ['apple', 'banana', 'cherry', 'orange', 'kiwi', 'mango', 'pear', 'pineapple', 'watermelon']
+
+# Выбор случайного слова из списка
+word = random.choice(words)
+
+# Символы для скрытых букв слова
+hidden_word = '_' * len(word)
+
+# Количество попыток
+max_attempts = 6
+attempts = 0
+
+# Список уже открытых букв
+guessed_letters = []
+
+# Основной цикл игры
+while attempts < max_attempts and hidden_word != word:
+    print('Guess the word:', hidden_word)
+    print('Attempts left:', max_attempts - attempts)
+    
+    # Ввод игроком буквы
+    letter = input('Enter a letter: ')
+    
+    # Проверка введенной буквы
+    if letter in guessed_letters:
+        print('You already guessed this letter')
+    elif letter in word:
+        print('Good guess!')
+        # Открытие всех вхождений угаданной буквы
+        for i in range(len(word)):
+            if word[i] == letter:
+                hidden_word = hidden_word[:i] + letter + hidden_word[i+1:]
+    else:
+        print('Bad guess!')
+        attempts += 1
+    
+    # Добавление угаданной буквы в список
+    guessed_letters.append(letter)
+    
+# Проверка результата игры
+if hidden_word == word:
+    print('You win! The word is:', word)
+else:
+    print('You lose! The word was:', word)
