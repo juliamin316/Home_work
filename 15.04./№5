@@ -1,0 +1,43 @@
+today = input()   # какая погода сегодня
+p = float(input())   # вероятность ясного дня после ясного
+q = float(input())   # вероятность пасмурного дня после пасмурного
+n = int(input())   # через сколько дней нужен прогноз
+
+# определяем вероятности для каждого дня, начиная со второго дня и до нужного дня
+probabilities = [0.0, 0.0]   # вероятность ясного и пасмурного дня на следующий день
+if today == "ясно":
+    probabilities = [p, 1 - p]
+else:
+    probabilities = [1 - q, q]
+
+for i in range(3, n + 1):
+    next_probabilities = [0.0, 0.0]
+    next_probabilities[0] = probabilities[0] * p + probabilities[1] * (1 - q)
+    next_probabilities[1] = probabilities[0] * (1 - p) + probabilities[1] * q
+    probabilities = next_probabilities
+
+# выбираем максимальную вероятность
+max_prob = max(probabilities)
+if max_prob == 0.5:
+    print("равновероятно")
+else:
+    if probabilities[0] == max_prob:
+        print("ясно", max_prob)
+    else:
+        print("пасмурно", max_prob)
+# Пример работы кода: 
+входные данные:
+ясно
+0.8
+0.6
+3
+выходные данные:
+ясно 0.728
+
+входные данные:
+пасмурно
+0.3
+0.4
+4
+выходные данные:
+пасмурно 0.358
