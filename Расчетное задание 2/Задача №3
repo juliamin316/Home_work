@@ -1,0 +1,19 @@
+cities = []  # список городов со странами и населением
+while True:
+    try:
+        city, country, population = input().split()
+        cities.append((city, int(population)))
+    except EOFError:
+        break
+
+intervals = {}  # словарь интервалов и соответствующих списков городов
+for city, population in cities:
+    interval = population // 100000  # определяем интервал
+    if interval not in intervals:
+        intervals[interval] = []
+    intervals[interval].append(city)
+
+# сортируем интервалы и выводим результат на экран
+for interval in sorted(intervals):
+    cities = sorted(intervals[interval])
+    print(f"{interval * 100} - {(interval + 1) * 100 - 1}: {', '.join(cities)}")
