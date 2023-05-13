@@ -1,0 +1,25 @@
+import csv
+
+filename = 'alpha_oriona.csv'
+
+# Чтение файла
+with open(filename, 'r') as file:
+    reader = csv.reader(file, delimiter=';')
+    next(reader) # Пропуск заголовка
+    data = [(row[0] + ' ' + row[1], int(row[2])) for row in reader]
+
+n = len(data)
+dp = [1] * n 
+for i in range(n-2, -1, -1):
+    for j in range(i+1, n):
+        if data[j][1] <= data[i][1]:
+            dp[i] = max(dp[i], dp[j]+1)
+
+# Нахождение наибольшей длины и индекса начала
+max_length = max(dp)
+start_index = dp.index(max_length)
+start_time = data[start_index][0]
+
+# Вывод результатов
+print(max_length)
+print(start_time)
