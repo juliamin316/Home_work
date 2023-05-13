@@ -1,0 +1,50 @@
+Вариант функции с рекурсией:
+def tribonacci_rec(n):
+    if n == 0:
+        return 0
+    elif n == 1 or n == 2:
+        return 1
+    else:
+        return tribonacci_rec(n-1) + tribonacci_rec(n-2) + tribonacci_rec(n-3)
+
+
+Вариант функции без рекурсии:
+def tribonacci(n):
+    if n == 0:
+        return 0
+    elif n == 1 or n == 2:
+        return 1
+    else:
+        a, b, c = 0, 0, 1
+        for i in range(3, n+1):
+            a, b, c = b, c, a+b+c
+        return c
+
+Сравнение скорости выполнения функций для различных входных значений n:
+import timeit
+
+def compare_tribonacci(n):
+    print("n =", n)
+    print("tribonacci_rec:", timeit.timeit(lambda: tribonacci_rec(n), number=10000))
+    print("tribonacci:", timeit.timeit(lambda: tribonacci(n), number=10000))
+
+Значения n:
+compare_tribonacci(5)
+compare_tribonacci(10)
+compare_tribonacci(20)
+compare_tribonacci(30)
+
+
+Результат: 
+n = 5
+tribonacci_rec: 0.0007887790000000042
+tribonacci: 2.3124000000699726e-05
+n = 10
+tribonacci_rec: 0.028534147000000005
+tribonacci: 3.690899998858022e-05
+n = 20
+tribonacci_rec: 10.287435014000002
+tribonacci: 5.780399997939406e-05
+n = 30
+tribonacci_rec: 5326.827765311
+tribonacci: 7.849600000687839e-05
