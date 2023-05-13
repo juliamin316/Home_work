@@ -1,0 +1,23 @@
+# считываем названия учебников
+books = input().split('\t')[1:]
+
+# считываем данные о магазинах и ценах на учебники
+shops = {}
+while True:
+    try:
+        line = input().split('\t')
+        shop_name = line[0]
+        prices = list(map(float, line[1:]))
+        shops[shop_name] = dict(zip(books, prices))
+    except:
+        break
+
+# находим самый выгодный магазин
+best_shop = min(shops.keys(), key=lambda shop: sum(shops[shop].values()))
+
+# выводим результаты
+print(best_shop)
+for book in books:
+    prices = [shops[shop][book] for shop in shops.keys()]
+    best_price = min(prices)
+    print(book + '\t' + str(best_price))
