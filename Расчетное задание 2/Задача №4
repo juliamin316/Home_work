@@ -1,0 +1,16 @@
+import sys
+
+# Итерируемся по строкам ввода, нумеруя их с 1
+for line_number, line in enumerate(sys.stdin, start=1):
+    # Удаляем пробельные символы в начале и конце строки
+    line = line.strip()
+
+    # Пропускаем строки, начинающиеся с символа '#', и пустые строки
+    if not line or line.startswith('#'):
+        continue
+
+    # Формируем строку вывода в нужном формате
+    output_line = f"Line {line_number}: {line}"
+
+    # Выводим строку на экран
+    print(output_line)
