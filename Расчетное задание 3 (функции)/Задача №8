@@ -1,0 +1,6 @@
+def discount_checker(threshold, *purchases):
+    exceeded = []
+    for i, purchase in enumerate(purchases, 1):
+        if purchase > threshold:
+            exceeded.append(i)
+    return exceeded
