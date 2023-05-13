@@ -1,0 +1,6 @@
+def more_than_five(lst):
+    result = []
+    for num in lst:
+        if abs(num) > 10:
+            result.append(num)
+    return result
