@@ -1,0 +1,39 @@
+import json
+import csv
+
+# считываем данные из файлов и объединяем их в список
+data = []
+with open('Матфак.json') as f:
+    data.extend(json.load(f))
+with open('Экономисты.json') as f:
+    data.extend(json.load(f))
+
+# предоставляем пользователю выбор
+choice = input('Введите команду (средний_балл, по_возрасту): ')
+
+if choice == 'средний_балл':
+    # запрашиваем факультет
+    faculty = input('Введите название факультета: ')
+    # находим студентов с заданным факультетом и вычисляем средний балл
+    students = [student for student in data if student['Факультет'].strip() == faculty]
+    if students:
+        avg_grade = sum(sum(student['Оценки']) for student in students) / sum(len(student['Оценки']) for student in students)
+        print(f'Средний балл студентов факультета {faculty}: {avg_grade:.2f}')
+    else:
+        print(f'Студентов факультета {faculty} нет в базе данных')
+
+elif choice == 'по_возрасту':
+    # сортируем студентов по возрасту и выводим список
+    sorted_students = sorted(data, key=lambda student: student['Возраст'])
+    for student in sorted_students:
+        print(f"{student['Имя']} {student['Фамилия']}, {student['Возраст']} лет, факультет: {student['Факультет'].strip()}, оценки: {', '.join(str(grade) for grade in student['Оценки'])}")
+
+else:
+    print('Неизвестная команда')
+
+# сохраняем информацию в CSV файле
+with open('students.csv', 'w', newline='') as f:
+    writer = csv.writer(f)
+    writer.writerow(['Имя', 'Фамилия', 'Возраст', 'Факультет', 'Оценки'])
+    for student in data:
+        writer.writerow([student['Имя'], student['Фамилия'], student['Возраст'], student['Факультет'].strip(), ','.join(str(grade) for grade in student['Оценки'])])
