@@ -1,0 +1,9 @@
+def reverse_list(lst):
+    new_lst = []
+    for i in range(len(lst)):
+        if i%2==0:
+            new_lst.append(lst[i])
+        else:
+            new_lst.append(lst[len(lst)-i])
+    return(new_lst)
+print(reverse_list([0, 1, 2, 3, 4, 5, 6, 7]))
