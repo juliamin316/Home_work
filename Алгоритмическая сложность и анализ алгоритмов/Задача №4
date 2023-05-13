@@ -1,0 +1,50 @@
+import timeit
+
+# Линейный поиск медианы
+def linear_median(arr):
+    n = len(arr)
+    if n % 2 == 0:
+        return (arr[n // 2] + arr[n // 2 - 1]) / 2
+    else:
+        return arr[n // 2]
+
+# Бинарный поиск медианы
+def binary_median(arr):
+    n = len(arr)
+    if n % 2 == 0:
+        return (arr[binary_search(arr, n // 2)] + arr[binary_search(arr, n // 2 - 1)]) / 2
+    else:
+        return arr[binary_search(arr, n // 2)]
+
+# Вспомогательная функция для бинарного поиска
+def binary_search(arr, target):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return left
+
+# Тестирование
+arr1 = list(range(100000))
+arr2 = list(range(1000000))
+
+print("Linear search:")
+print("Array 1:", timeit.timeit(lambda: linear_median(arr1), number=100))
+print("Array 2:", timeit.timeit(lambda: linear_median(arr2), number=100))
+
+print("Binary search:")
+print("Array 1:", timeit.timeit(lambda: binary_median(arr1), number=100))
+print("Array 2:", timeit.timeit(lambda: binary_median(arr2), number=100))
+
+# результат тестирования
+Linear search:
+Array 1: 0.11409060000000525
+Array 2: 12.152432100000006
+Binary search:
+Array 1: 1.7340997999999956
+Array 2: 2.0691812000000007
