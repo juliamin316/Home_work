@@ -1,0 +1,42 @@
+def solve_sudoku(matrix):
+    def is_valid(row, col, num):
+        # Проверка, что число num не повторяется в строке
+        for j in range(4):
+            if matrix[row][j] == num:
+                return False
+        # Проверка, что число num не повторяется в столбце
+        for i in range(4):
+            if matrix[i][col] == num:
+                return False
+        # Проверка, что число num не повторяется в квадрате 2x2
+        square_row = (row // 2) * 2
+        square_col = (col // 2) * 2
+        for i in range(square_row, square_row+2):
+            for j in range(square_col, square_col+2):
+                if matrix[i][j] == num:
+                    return False
+        return True
+    
+    def solve(row, col):
+        # Если дошли до конца строки, переходим на следующую строку
+        if col == 4:
+            row += 1
+            col = 0
+        # Если дошли до конца судоку, значит решение найдено
+        if row == 4:
+            return True
+        # Если текущая ячейка уже заполнена, переходим к следующей
+        if matrix[row][col] != 0:
+            return solve(row, col+1)
+        # Пробуем заполнить ячейку числом от 1 до 4
+        for num in range(1, 5):
+            if is_valid(row, col, num):
+                matrix[row][col] = num
+                if solve(row, col+1):
+                    return True
+                # Если не удалось дальше решить судоку, возвращаемся назад
+                matrix[row][col] = 0
+        return False
+    
+    solve(0, 0)
+    return matrix
