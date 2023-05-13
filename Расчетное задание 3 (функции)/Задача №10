@@ -1,4 +1,4 @@
-Вариант функции с рекурсией:
+#Вариант функции с рекурсией:
 def tribonacci_rec(n):
     if n == 0:
         return 0
@@ -8,7 +8,7 @@ def tribonacci_rec(n):
         return tribonacci_rec(n-1) + tribonacci_rec(n-2) + tribonacci_rec(n-3)
 
 
-Вариант функции без рекурсии:
+#Вариант функции без рекурсии:
 def tribonacci(n):
     if n == 0:
         return 0
@@ -20,7 +20,7 @@ def tribonacci(n):
             a, b, c = b, c, a+b+c
         return c
 
-Сравнение скорости выполнения функций для различных входных значений n:
+#Сравнение скорости выполнения функций для различных входных значений n:
 import timeit
 
 def compare_tribonacci(n):
@@ -28,14 +28,14 @@ def compare_tribonacci(n):
     print("tribonacci_rec:", timeit.timeit(lambda: tribonacci_rec(n), number=10000))
     print("tribonacci:", timeit.timeit(lambda: tribonacci(n), number=10000))
 
-Значения n:
+#Значения n:
 compare_tribonacci(5)
 compare_tribonacci(10)
 compare_tribonacci(20)
 compare_tribonacci(30)
 
 
-Результат: 
+#Результат: 
 n = 5
 tribonacci_rec: 0.0007887790000000042
 tribonacci: 2.3124000000699726e-05
