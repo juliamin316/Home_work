@@ -1,0 +1,13 @@
+def get_transactions(t):
+    transactions = {}
+    for transaction in t:
+        if transaction == 'print_it':
+            for type, values in transactions.items():
+                print(f"{values[0]} {type}: {values[1] / 100:.2f}")
+        else:
+            phone, type, amount = transaction.split('-')[0], transaction.split(':')[0].split('-')[1], int(transaction.split(':')[1])
+            if type in transactions:
+                transactions[type][0] += 1
+                transactions[type][1] += amount
+            else:
+                transactions[type] = [1, amount]
