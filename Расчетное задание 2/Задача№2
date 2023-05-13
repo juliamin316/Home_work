@@ -1,0 +1,21 @@
+from itertools import product
+
+# считываем масть, которую нужно выбросить
+excluded_suit = input().strip()
+
+# задаем номиналы и масти
+ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'валет', 'дама', 'король', 'туз']
+suits = ['пик', 'треф', 'бубен', 'червей']
+
+# удаляем из списка мастей ту, которую нужно выбросить
+suits.remove(excluded_suit)
+
+# создаем колоду без выброшенной масти
+deck = [(rank, suit) for rank, suit in product(ranks, suits)]
+
+# сортируем колоду по возрастанию номинала, затем по масти
+sorted_deck = sorted(deck, key=lambda card: (ranks.index(card[0]), suits.index(card[1])))
+
+# выводим карты по порядку
+for card in sorted_deck:
+    print(card[0], card[1])
