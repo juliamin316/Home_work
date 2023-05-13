@@ -1,0 +1,18 @@
+import random
+import linecache
+
+# получаем количество строк в файле
+num_lines = sum(1 for line in open('lines.txt'))
+
+# если файл пустой, ничего не делаем
+if num_lines == 0:
+    pass
+else:
+    # генерируем случайный номер строки
+    random_line = random.randint(1, num_lines)
+
+    # получаем строку с указанным номером
+    line = linecache.getline('lines.txt', random_line)
+
+    # выводим результат
+    print(line.strip())
