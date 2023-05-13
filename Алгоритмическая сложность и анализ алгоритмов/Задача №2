@@ -1,0 +1,32 @@
+import random
+import time
+
+# Алгоритм линейного поиска
+def linear_search(arr):
+    min_num = max_num = arr[0]
+    for num in arr:
+        if num < min_num:
+            min_num = num
+        elif num > max_num:
+            max_num = num
+    return min_num, max_num
+
+# Алгоритм бинарного поиска
+def binary_search(arr):
+    arr.sort()
+    return arr[0], arr[-1]
+
+# Тестирование
+for i in range(10):
+    arr = [random.randint(0, 100000) for _ in range(random.randint(1000, 10000))]
+    start_time = time.time()
+    min_num, max_num = linear_search(arr)
+    end_time = time.time()
+    print(f"Linear search: {end_time - start_time:.5f} seconds")
+
+    start_time = time.time()
+    min_num, max_num = binary_search(arr)
+    end_time = time.time()
+    print(f"Binary search: {end_time - start_time:.5f} seconds")
+
+# алгоритм бинарного поиска более эффективен
