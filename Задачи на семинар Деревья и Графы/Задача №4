@@ -1,0 +1,39 @@
+def find_connected_components(edges):
+    adjacency_list = {}
+    for edge in edges:
+        u, v = edge
+        if u not in adjacency_list:
+            adjacency_list[u] = []
+        if v not in adjacency_list:
+            adjacency_list[v] = []
+        adjacency_list[u].append(v)
+        adjacency_list[v].append(u)
+
+    # Функция обхода в глубину
+    def dfs(node, component):
+        visited.add(node)
+        component.append(node)
+        if node in adjacency_list:
+            for neighbor in adjacency_list[node]:
+                if neighbor not in visited:
+                    dfs(neighbor, component)
+
+    visited = set()
+    components = []
+
+    # Выполняем обход в глубину для каждой вершины, если она еще не была посещена
+    for node in adjacency_list:
+        if node not in visited:
+            component = []
+            dfs(node, component)
+            components.append(component)
+
+    return components
+
+# Работа кода: 
+# Пример списка ребер
+edges = [(1, 2), (2, 3), (4, 5)]
+
+# Вызов функции для поиска связных компонентов
+components = find_connected_components(edges)
+print(components)
