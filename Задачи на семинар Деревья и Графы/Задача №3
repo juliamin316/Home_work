@@ -1,0 +1,68 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def sort_tree(root, compare_func):
+    if not root:
+        return
+
+    # Собираем все значения в дереве
+    values = get_values_in_order(root, [])
+
+    # Сортируем значения
+    sorted_values = sorted(values, key=compare_func)
+
+    # Обновляем значения в дереве
+    update_values_in_order(root, sorted_values)
+
+def get_values_in_order(node, values):
+    if not node:
+        return values
+
+    get_values_in_order(node.left, values)
+    values.append(node.value)
+    get_values_in_order(node.right, values)
+
+    return values
+
+def update_values_in_order(node, sorted_values):
+    if not node:
+        return
+
+    update_values_in_order(node.left, sorted_values)
+    node.value = sorted_values.pop(0)
+    update_values_in_order(node.right, sorted_values)
+
+# Работа кода: 
+# Создание узлов дерева
+root = Node(4)
+node2 = Node(2)
+node3 = Node(7)
+node4 = Node(1)
+node5 = Node(3)
+
+# Установка связей между узлами
+root.left = node2
+root.right = node3
+node2.left = node4
+node2.right = node5
+
+# Функция сравнения элементов для сортировки
+def compare_func(value):
+    return value
+
+# Вызов функции сортировки дерева
+sort_tree(root, compare_func)
+
+# Вывод значений дерева после сортировки
+def print_tree(node):
+    if not node:
+        return
+
+    print_tree(node.left)
+    print(node.value)
+    print_tree(node.right)
+
+print_tree(root)
