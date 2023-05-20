@@ -1,0 +1,35 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+def dfs(root):
+    if not root:
+        return []
+    
+    stack = [root]
+    result = []
+
+    while stack:
+        node = stack.pop()
+        result.append(node.value)
+        stack.extend(reversed(node.children))
+    return result
+    
+    
+# Пример работы кода: 
+# Создание узлов дерева
+root = Node(1)
+node2 = Node(2)
+node3 = Node(3)
+node4 = Node(4)
+node5 = Node(5)
+
+# Установка связей между узлами
+root.children = [node2, node3]
+node2.children = [node4, node5]
+
+# Вызов функции обхода в глубину
+result = dfs(root)
+print(result)  
+# Вывод: [1, 2, 4, 5, 3]
