@@ -1,0 +1,70 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.children = []
+
+def find_lca(root, node1, node2):
+    if not root or not node1 or not node2:
+        return None
+
+    path1 = find_path(root, node1, [])
+    path2 = find_path(root, node2, [])
+
+    if not path1 or not path2:
+        return None
+
+    lca = None
+    i = 0
+
+    while i < len(path1) and i < len(path2):
+        if path1[i] == path2[i]:
+            lca = path1[i]
+        else:
+            break
+
+        i += 1
+
+    return lca
+
+def find_path(node, target, path):
+    if not node:
+        return None
+
+    path.append(node)
+
+    if node.value == target.value:
+        return path
+
+    for child in node.children:
+        result = find_path(child, target, path)
+        if result:
+            return result
+
+    path.pop()
+    return None
+
+
+# Пример работы кода
+# Создание узлов дерева
+root = Node(1)
+node2 = Node(2)
+node3 = Node(3)
+node4 = Node(4)
+node5 = Node(5)
+
+# Установка связей между узлами
+root.children = [node2, node3]
+node2.children = [node4, node5]
+
+# Вызов функции поиска LCA
+lca = find_lca(root, node4, node5)
+print(lca.value)  
+# Вывод: 2
+
+lca = find_lca(root, node2, node3)
+print(lca.value)  
+# Вывод: 1
+
+lca = find_lca(root, node4, Node(6))
+print(lca)  
+# Вывод: None
