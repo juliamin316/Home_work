@@ -1,0 +1,45 @@
+import heapq
+
+def dijkstra(graph, start):
+    distances = {vertex: float('inf') for vertex in graph}
+    distances[start] = 0
+
+    heap = [(0, start)]
+
+    while heap:
+        current_distance, current_vertex = heapq.heappop(heap)
+
+        # Если текущее расстояние больше уже найденного расстояния, пропускаем его
+        if current_distance > distances[current_vertex]:
+            continue
+
+        for neighbor, weight in graph[current_vertex].items():
+            distance = current_distance + weight
+
+            # Если новое расстояние меньше текущего, обновляем его
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(heap, (distance, neighbor))
+
+    return distances
+    
+    
+# Работа кода: 
+# Пример списка ребер с неотрицательными весами
+edges = [(1, 2, 2), (1, 3, 4), (2, 3, 1), (2, 4, 7), (3, 4, 3)]
+graph = {}
+
+for edge in edges:
+    u, v, weight = edge
+    if u not in graph:
+        graph[u] = {}
+    if v not in graph:
+        graph[v] = {}
+    graph[u][v] = weight
+    graph[v][u] = weight
+
+start_vertex = 1
+
+# Вызов функции для поиска кратчайших путей
+distances = dijkstra(graph, start_vertex)
+print(distances)
