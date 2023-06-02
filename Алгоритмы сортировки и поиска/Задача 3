@@ -1,0 +1,36 @@
+class Movie:
+    def __init__(self, title, rating, genre, year):
+        self.title = title
+        self.rating = rating
+        self.genre = genre
+        self.year = year
+
+    def __repr__(self):
+        return f"Movie(title='{self.title}', rating={self.rating}, genre='{self.genre}', year={self.year})"
+
+
+def sort_movies(movies):
+    sorted_movies = sorted(movies, key=lambda movie: (-movie.rating, movie.genre, movie.year))
+    return sorted_movies
+
+
+# Генерируем список фильмов случайным образом
+import random
+
+genres = ["Action", "Comedy", "Drama", "Thriller", "Sci-Fi", "Romance"]
+years = range(2000, 2023)
+movies = [
+    Movie(f"Movie{i}", random.uniform(1, 10), random.choice(genres), random.choice(years))
+    for i in range(10)
+]
+
+# Сортируем список фильмов
+sorted_movies = sort_movies(movies)
+
+# Проверка правильности сортировки с помощью встроенной функции sorted()
+expected_movies = sorted(movies, key=lambda movie: (-movie.rating, movie.genre, movie.year))
+assert sorted_movies == expected_movies
+
+# Вывод отсортированного списка фильмов
+for movie in sorted_movies:
+    print(movie)
