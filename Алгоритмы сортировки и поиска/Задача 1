@@ -1,0 +1,31 @@
+def sort_array(arr):
+    even_nums = []
+    odd_nums = []
+
+    # Разделение чисел на четные и нечетные массивы
+    for num in arr:
+        if num % 2 == 0:
+            even_nums.append(num)
+        else:
+            odd_nums.append(num)
+
+    # Сортировка четного массива по возрастанию
+    even_nums.sort()
+
+    # Сортировка нечетного массива по убыванию
+    odd_nums.sort(reverse=True)
+
+    # Объединение отсортированных массивов
+    sorted_arr = even_nums + odd_nums
+
+    return sorted_arr
+
+# использование
+input_arr = [9, 4, 2, 7, 5, 1, 8, 6, 3]
+sorted_arr = sort_array(input_arr)
+
+# Проверка правильности сортировки с помощью встроенной функции sorted()
+expected_arr = sorted(input_arr, key=lambda x: (x % 2 == 0, x))
+assert sorted_arr == expected_arr
+
+print(sorted_arr)
