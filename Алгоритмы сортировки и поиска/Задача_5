@@ -1,0 +1,36 @@
+def sort_products_by_sales(products):
+    sorted_products = {}
+    for product in products:
+        category = product['category']
+        if category not in sorted_products:
+            sorted_products[category] = []
+
+        sorted_products[category].append(product)
+
+    for category, products_list in sorted_products.items():
+        products_list.sort(key=lambda x: x['sales'])
+
+    return sorted_products
+
+# Генерируем случайные товары для примера
+import random
+
+categories = ['Electronics', 'Clothing', 'Books', 'Beauty']
+products = []
+for _ in range(20):
+    product = {
+        'name': f'Product{_}',
+        'category': random.choice(categories),
+        'sales': random.randint(0, 100)
+    }
+    products.append(product)
+
+# Сортируем товары по продажам в каждой категории
+sorted_products = sort_products_by_sales(products)
+
+# Вывод 
+for category, products_list in sorted_products.items():
+    print(f"Категория: {category}")
+    for product in products_list:
+        print(product)
+    print()
