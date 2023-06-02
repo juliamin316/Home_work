@@ -1,0 +1,43 @@
+from datetime import datetime
+
+def find_employee_with_most_messages(messages):
+    employee_counter = {}
+    max_messages = 0
+    max_employee = None
+    max_time = None
+
+    for message in messages:
+        employee_id = message['employee_id']
+        message_time = message['timestamp']
+
+        if employee_id not in employee_counter:
+            employee_counter[employee_id] = 0
+
+        employee_counter[employee_id] += 1
+
+        if employee_counter[employee_id] > max_messages:
+            max_messages = employee_counter[employee_id]
+            max_employee = employee_id
+            max_time = message_time
+
+    return max_employee, max_time
+
+# Генерируем случайные сообщения для примера
+import random
+
+employees = [1, 2, 3, 4, 5]
+start_date = datetime.now()
+messages = []
+for _ in range(100):
+    message = {
+        'employee_id': random.choice(employees),
+        'timestamp': start_date
+    }
+    messages.append(message)
+    start_date = start_date - timedelta(hours=random.randint(1, 24))
+
+# Находим сотрудника с наибольшим количеством сообщений и время получения
+max_employee, max_time = find_employee_with_most_messages(messages)
+
+print(f"Сотрудник {max_employee} получил наибольшее количество сообщений.")
+print(f"Последнее сообщение было получено в {max_time}.")
