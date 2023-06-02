@@ -1,0 +1,31 @@
+def counting_sort(arr):
+    # Находим максимальное значение в массиве
+    max_value = max(arr)
+
+    # Создаем вспомогательный массив для подсчета частоты встречаемости чисел
+    count = [0] * (max_value + 1)
+
+    # Подсчитываем частоту встречаемости каждого числа
+    for num in arr:
+        count[num] += 1
+
+    # Восстанавливаем отсортированный массив
+    sorted_arr = []
+    for i in range(len(count)):
+        sorted_arr.extend([i] * count[i])
+
+    return sorted_arr
+
+# Генерируем массив случайным образом
+import random
+N = 10  # Количество элементов в массиве
+arr = [random.randint(1, 10**6) for _ in range(N)]
+
+# Сортируем массив с помощью сортировки подсчетом
+sorted_arr = counting_sort(arr)
+
+# Проверка правильности сортировки с помощью встроенной функции sorted()
+expected_arr = sorted(arr)
+assert sorted_arr == expected_arr
+
+print(sorted_arr)
