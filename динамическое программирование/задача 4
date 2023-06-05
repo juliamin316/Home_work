@@ -1,0 +1,17 @@
+def select_tasks(tasks):
+    result = []
+    sorted_tasks = sorted(tasks, key=lambda x: x[1])  # Сортировка по временным ограничениям
+
+    for task in sorted_tasks:
+        if not any(task[0] <= prev_task[1] for prev_task in result):  # Проверка на пересечения
+            result.append(task)
+
+    return result
+
+# Пример использования
+tasks = [(1, 3), (2, 5), (4, 7), (6, 8), (9, 10)]
+selected_tasks = select_tasks(tasks)
+
+print("Выбранные задачи:")
+for task in selected_tasks:
+    print(task)
