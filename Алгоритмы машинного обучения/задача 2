@@ -1,0 +1,40 @@
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
+
+# Загрузка датасета MNIST
+mnist = fetch_openml('mnist_784')
+X = mnist.data
+y = mnist.target
+
+# Разделение данных на тренировочный и тестовый наборы
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Создание и обучение модели Random Forest
+n_estimators = 100  # Количество деревьев в лесу
+rf = RandomForestClassifier(n_estimators=n_estimators)
+rf.fit(X_train, y_train)
+
+# Прогнозирование меток классов для тестовых данных
+y_pred = rf.predict(X_test)
+
+# Определение точности модели
+accuracy = accuracy_score(y_test, y_pred)
+print("Точность Random Forest:", accuracy)
+
+
+# k-NN
+k = 3  # Значение k для k-NN
+knn = KNeighborsClassifier(n_neighbors=k)
+knn.fit(X_train, y_train)
+y_pred_knn = knn.predict(X_test)
+accuracy_knn = accuracy_score(y_test, y_pred_knn)
+print("Точность k-NN:", accuracy_knn)
+
+# SVM
+svm = SVC()
+svm.fit(X_train, y_train)
+y_pred_svm = svm.predict(X_test)
+accuracy_svm = accuracy_score(y_test, y_pred_svm)
+print("Точность SVM:", accuracy_svm)
