@@ -1,0 +1,11 @@
+def count_paths(N):
+    if N == 0 or N == 1:
+        return 1
+    elif N == 2:
+        return 2
+    else:
+        return count_paths(N-1) + count_paths(N-2) + count_paths(N-3)
+
+N = int(input("Введите количество ступенек: "))
+paths = count_paths(N)
+print("Число всевозможных маршрутов: ", paths)
