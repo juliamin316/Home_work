@@ -1,0 +1,15 @@
+def min_cost(N, costs):
+    dp = [float('inf')] * (N+1)
+    dp[0] = 0
+    dp[1] = costs[0]
+
+    for i in range(2, N+1):
+        dp[i] = min(dp[i-1], dp[i-2]) + costs[i-1]
+
+    return dp[N]
+
+N = int(input("Введите количество ступенек: "))
+costs = list(map(int, input("Введите стоимость каждой ступеньки: ").split()))
+
+min_cost = min_cost(N, costs)
+print("Наименьшая возможная стоимость прохода по лестнице: ", min_cost)
