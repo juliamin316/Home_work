@@ -1,0 +1,33 @@
+import sqlite3
+import csv
+
+def importance(*properties):
+    # Подключение к базе данных
+    conn = sqlite3.connect('fish_base.db')
+    cursor = conn.cursor()
+
+    # Формирование строки для условия WHERE в запросе
+    condition = ' OR '.join('property = ?' for _ in properties)
+
+    # Выполнение SQL-запроса
+    query = """
+    SELECT f.name, f.size, p.property
+    FROM Fish f
+    JOIN Properties p ON f.property_id = p.id
+    WHERE {}
+    ORDER BY f.size DESC, p.property
+    """.format(condition)
+    cursor.execute(query, properties)
+
+    # Создание и запись в файл CSV
+    with open('discovery.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter=';')
+        writer.writerow(['fish', 'size', 'property'])
+        writer.writerows(cursor.fetchall())
+
+    # Закрытие соединения с базой данных
+    cursor.close()
+    conn.close()
+
+v = ["omega-3"]
+importance(*v)
