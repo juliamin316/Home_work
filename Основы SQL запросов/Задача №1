@@ -1,0 +1,39 @@
+import sqlite3
+
+# Подключение к базе данных
+conn = sqlite3.connect('dutch_herring.db')
+cursor = conn.cursor()
+
+# Ввод минимального размера и максимального веса селедки
+min_size = input("Введите минимальный размер: ")
+max_weight = input("Введите максимальный вес: ")
+
+# Выполнение SQL-запроса
+query = """
+SELECT DISTINCT type, size, SUM(quantity) AS total
+FROM Fish
+WHERE size >= ? AND weight <= ?
+GROUP BY type, size
+ORDER BY size DESC
+"""
+cursor.execute(query, (min_size, max_weight))
+
+# Создание словаря с результатами
+choice = {
+    "types": [],
+    "sizes": [],
+    "total": 0
+}
+
+# Обработка результатов запроса
+for row in cursor.fetchall():
+    choice["types"].append(row[0])
+    choice["sizes"].append(row[1])
+    choice["total"] += row[2]
+
+# Закрытие соединения с базой данных
+cursor.close()
+conn.close()
+
+# Вывод результата
+print(choice)
